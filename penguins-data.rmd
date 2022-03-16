@@ -1,0 +1,69 @@
+---
+title: "Working with Penguin Dataset"
+author: "Ruth Kingsley"
+date: "2/23/2022"
+output: html_document
+---
+
+## Setting up my Environment
+Notes: Setting up my R environment by installing and loading the 'tidyverse' and 'palmerpenguins' packages
+
+Installing packages with install.packages()
+
+```{r installing packages}
+install.packages("tidyverse")
+install.packages("palmerpenguins")
+```
+
+Loading Packages with library function
+```{r loading packages}
+library(tidyverse)
+library(palmerpenguins)
+library(ggplot2)
+```
+
+To return a view of the penguins data, use the View(). Remember that **R is case sensitive**
+``{r View penguins data}
+View(penguins)
+``
+
+To view the first 6 rows of the entire dataset, I use the head()
+```{r look at the data}
+head(penguins)
+```
+
+The structure of this dataset and the column names can be viewed by the the following functions;
+```{r View dataset structure and column names}
+str(penguins)
+```
+
+```{r look at the column names}
+colnames(penguins)
+```
+
+## Creating Visuals for the Penguins Dataset
+
+To plot the visuals for the penguin data
+```{r ggplot for penguin data visualization}
+ggplot(data = penguins)+ geom_point(mapping = aes(x= flipper_length_mm, y= body_mass_g))
+```
+
+```{r}
+ggplot(data = penguins) + geom_bar(mapping = aes(x=species, fill= island))
+```
+
+```{r}
+ggplot(data = penguins) + geom_bar(mapping = aes(x=species, fill= island))+
+  facet_wrap(~island)
+```
+
+Creating annotation and labels for the visuals
+```{r warning=TRUE}
+ggplot(data = penguins) +
+  geom_smooth(mapping = aes(x= flipper_length_mm, y= body_mass_g)) +
+  geom_point(mapping = aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  labs(title="Palmer Penguins: Body Mass vs. Flipper Length", subtitle ="Sample of Three Penguin Species",
+       caption = "Data Collected by Kristen Gorman") +
+  annotate("text", x=220, y = 3500, label="The Gentoos are the largest", color="purple",
+           fontface="bold", size= 3)
+```
