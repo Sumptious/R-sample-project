@@ -1,54 +1,66 @@
-## ---
+---
 title: "Working with Penguin Dataset"
 author: "Ruth Kingsley"
 date: "2/23/2022"
-## ---
+---
 
 
 ## Setting up my R environment by installing and loading the required packages
-
 ## Installing packages with install.packages()
-
+```{r}
 install.packages("tidyverse")
 install.packages("lubridate")
 install.packages("skimr")
 install.packages("janitor")
 install.packages("palmerpenguins")
+```
 
 ### Loading Packages with library function
+```{r}
 library(tidyverse)
 library(lubridate)
 library(skimr)
 library(janitor)
 library(palmerpenguins)
+```
 
 ## show summary of dataset
+```{r}
 skim_without_charts(penguins)
+```
 
 ## View penguins data
+```{r}
 View(penguins)
-
+```
 
 To view the first 6 rows of the entire dataset, I use the head()
 ## look at the data
+```{r}
 head(penguins)
+```
 
 ## View dataset structure and column names
+```{r}
 str(penguins)
-
+```
 ## look at the column names
+```{r}
 colnames(penguins)
-
+```
 ## Cleanin THE Penguin data
 ### changing the character case of column names to lower case
+```{r}
 rename_with(penguins, tolower)
-
+```
 ## Check if the name formats are valid
+```{r}
 clean_names(penguins)
+```
 
 ## Sorting Data with arrange() function
 ## The first example sorts in ascending order while the second sorts in descending order
-
+```{r}
 penguins %>%
   arrange(bill_length_mm)
 
@@ -57,8 +69,9 @@ penguins %>%
 
 penguins2 <- penguins %>% arrange(-bill_length_mm)
 View(penguins2)
-
+```
 ## Organizing penguin data using different functions in R
+```{r}
 penguins %>% group_by(island) %>% drop_na() %>% summarize(mean_bill_length_mm = 
                                                              mean(bill_length_mm))
 
@@ -71,21 +84,21 @@ penguins %>% group_by(species, island) %>% drop_na() %>%
 penguins %>% filter(species == "Adelie")
 
 penguins %>% filter(bill_length_mm == 40)
+```
 
 ## Creating Visuals for the Penguins Dataset
 ## Creating scatter plots for penguin data
+```{r}
 ggplot(data = penguins)+ geom_point(mapping = aes(x= flipper_length_mm, y= body_mass_g))
 
-```{r}
 ggplot(data = penguins) + geom_bar(mapping = aes(x=species, fill= island))
-```
 
-```{r}
 ggplot(data = penguins) + geom_bar(mapping = aes(x=species, fill= island))+
   facet_wrap(~island)
 ```
 
 ## Creating annotation and labels for the visuals
+```{r}
 ggplot(data = penguins) +
   geom_smooth(mapping = aes(x= flipper_length_mm, y= body_mass_g)) +
   geom_point(mapping = aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
@@ -93,3 +106,4 @@ ggplot(data = penguins) +
        caption = "Data Collected by Kristen Gorman") +
   annotate("text", x=220, y = 3500, label="The Gentoos are the largest", color="purple",
            fontface="bold", size= 3)
+```
